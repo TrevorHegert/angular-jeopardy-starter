@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   questionInfo;
+  score = 0;
+  userAnswer;
 
   constructor(private DataService: DataService){}
 
@@ -19,12 +21,23 @@ export class AppComponent implements OnInit {
       .subscribe(
         questionInfo => {
           this.questionInfo = questionInfo[0];
+          console.log(this.questionInfo.answer)
         }
       )
   }
 
   ngOnInit(){
     this.getQuestionInfo()
+  }
+
+  grade(){
+    if(this.userAnswer.toLowerCase() === this.questionInfo.answer.toLowerCase()){
+      this.score += this.questionInfo.value;
+    }else{
+      this.score -= this.questionInfo.value;
+    }
+    this.getQuestionInfo()
+    this.userAnswer = "";
   }
 
 
