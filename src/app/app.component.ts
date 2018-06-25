@@ -30,8 +30,8 @@ export class AppComponent implements OnInit {
     this.getQuestionInfo()
   }
 
-  grade(){
-    if(this.userAnswer.toLowerCase() === this.questionInfo.answer.toLowerCase()){
+  grade(blah){
+    if(blah.toLowerCase() === this.questionInfo.answer.toLowerCase()){
       this.score += this.questionInfo.value;
     }else{
       this.score -= this.questionInfo.value;
