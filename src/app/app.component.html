@@ -5,4 +5,15 @@
   </h1>
 </div>
 
+
+<b>The Category:</b> {{questionInfo?.category.title}} <br>
 <b>The Question:</b> {{questionInfo?.question}} <br>
+<br>
+<b>For: $</b> {{questionInfo?.value}}<br>
+<b>Your answer is:</b> <input type='text' [(ngModel)]="userAnswer"><button (click)="checkAnswer()">Submit</button>
+<br><br>
+<b>Your Current Score: </b> {{userScore}}<br>
+<b>Your Last Answer Was: </b> {{lastAnswerWas}}
+<br><br><br><br>
+<button (click)="cheat()">Cheat!</button>
+<b [style.display] = "cheating ? 'inline-block': 'none'">The Answer Is: {{questionInfo?.answer}} </b>
