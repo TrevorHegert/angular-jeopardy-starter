@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from './data.service';
 
 @Component({
@@ -9,16 +9,18 @@ import { DataService } from './data.service';
 
 
 export class AppComponent implements OnInit {
-  title = "Trevor's Angular Jeopardy Game"
+  title = "Trevor's Angular Jeopardy Game";
 
   questionInfo;
-  userAnswer: string = "";
-  userScore: number = 0;
-  lastAnswerWas: string = '';
-  cheating: boolean = false;
+  userScore= 0;
+  lastAnswerWas= '';
   
 
   constructor(private DataService: DataService){}
+
+  onClicked(userAnswer: string) {
+    this.checkAnswer(userAnswer);
+  }
 
   getQuestionInfo(){
     this.DataService.getQuestionInfo()
@@ -29,8 +31,9 @@ export class AppComponent implements OnInit {
       )
   }
 
-  checkAnswer(){
-    if (this.userAnswer.toLowerCase === this.questionInfo.answer.toLowerCase) {
+  checkAnswer(potato){
+    if (potato.replace(/i/g, "").replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase() === this.questionInfo.answer.replace(/i/g, "").replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase()) {
+      console.log("clicked");
       this.givePoints();
     } else {
       this.takePoints();
@@ -49,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   givePoints(){
-    this.lastAnswerWas = 'CORRECT!;'
+    this.lastAnswerWas = 'CORRECT!';
     this.userScore = (this.userScore + this.questionInfo.value);
     this.DataService.getQuestionInfo()
       .subscribe(
@@ -59,9 +62,7 @@ export class AppComponent implements OnInit {
       )
   }
 
-  cheat() {
-    this.cheating = !this.cheating;
-  }
+
 
   ngOnInit(){
     this.getQuestionInfo()
